@@ -1,4 +1,3 @@
-import json
 import time
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -11,7 +10,6 @@ def get_title(soup):
         for item in soup.find_all("h5", attrs={"class":'mt-3 mb-2 px-1'}):
             target_a = item.select_one("a")
 
-            # Extract the text within the <a> element
             text = target_a.get_text(strip=True)
             name.append(text)
         print(len(name))
@@ -30,7 +28,6 @@ def get_price(soup):
                 price.append(text)
         print(len(price))
         return price
-        # return name
     except AttributeError:
         return []
 
@@ -71,7 +68,7 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(options=chrome_options)
 driver.get("https://topai.tools/browse#")
 time.sleep(2)  
-scroll_pause_time = 1 
+pause_time = 1 
 screen_height = driver.execute_script("return window.screen.height;")   
 i = 1
 
@@ -79,7 +76,7 @@ i = 1
 while True:
     driver.execute_script("window.scrollTo(0, {screen_height}*{i});".format(screen_height=screen_height, i=i))
     i += 1
-    time.sleep(scroll_pause_time)
+    time.sleep(pause_time)
     scroll_height = driver.execute_script("return document.body.scrollHeight;")
     if i > 1300:
         break
